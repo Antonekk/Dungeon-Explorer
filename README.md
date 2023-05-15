@@ -1,7 +1,7 @@
 # Dungeon Explorer
 
 Prosta gra tekstowa polegająca na zwiedzaniu lochów, walce z napotkanymi potworami, zbieraniu przedmiotów i rozmijaniu swojej postaci
-
+(Diagram klas w pliku .drawio można otworzyć na stronie drawio.com)
 
 # Opis gry
 
