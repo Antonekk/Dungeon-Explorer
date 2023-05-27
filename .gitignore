@@ -1,0 +1,14 @@
+
+*.exe
+*.json
+*.dll
+*.pdb
+Dungeon-Explorer/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs
+Dungeon-Explorer/obj/Debug/net7.0/project.AssemblyInfo.cs
+*.cache
+*.txt
+*.editorconfig
+Dungeon-Explorer/obj/Debug/net7.0/project.GlobalUsings.g.cs
+*.props
+Dungeon-Explorer/obj/project.csproj.nuget.g.targets
+Dungeon-Explorer/project.csproj
