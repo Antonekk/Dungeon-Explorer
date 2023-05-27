@@ -12,10 +12,7 @@ namespace characters
         protected int defence;
         protected int level;
 
-        public Character(){
-            level = 1;
-            //todo
-        }
+
 
         public void Atack(Character atacked){
             //todo
@@ -26,8 +23,39 @@ namespace characters
         }
 
         bool is_dead(){
-            //todo
-            return false;
+            return current_hp <= 0;
+        }
+
+        public int get_max_hp(){
+            return max_hp;
+        }
+        public int get_current_hp(){
+            return current_hp;
+        }
+        public int get_luck(){
+            return luck;
+        }
+        public int get_defence(){
+            return defence;
+        }
+        public int get_level(){
+            return level;
+        }
+
+        protected void character_scale(){
+            scale_hp();
+            scale_defence();
+            scale_luck();
+        }
+
+        protected void scale_hp(){
+            max_hp = level*10;
+        }
+        protected void scale_luck(){
+            luck = level*3;
+        }
+        protected void scale_defence(){
+            defence = level*5;
         }
     }
 
@@ -36,11 +64,45 @@ namespace characters
         int gold_coins;
         int current_exp;
         int exp_to_level;
-        List<Item> Items;
+        List<Item> items;
 
 
         public Player(){
-            //todo
+            level = 1;
+            gold_coins = 5;
+            current_exp = 0;
+            exp_to_level = 10;
+            character_scale();
+            current_hp = max_hp;
+            items = new List<Item>();
+        }
+
+        public bool pay(int gc){
+            if (gc<=gold_coins){
+                gold_coins -= gc;
+                return true;
+            }
+            return false;
+        }
+
+        public void heal(int h){
+            int hp_increase = h+current_hp;
+            if(hp_increase >= max_hp){
+                current_hp = max_hp;
+            }
+            else{
+                current_hp = hp_increase;
+            }
+        }
+
+        public int get_gold_coins(){
+            return gold_coins;
+        }
+        public int get_current_exp(){
+            return current_exp;
+        }
+        public int get_exp_to_level(){
+            return exp_to_level;
         }
     }
 

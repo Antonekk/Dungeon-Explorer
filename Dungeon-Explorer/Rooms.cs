@@ -12,7 +12,7 @@ namespace rooms
         protected CTO term = new CTO();
         protected int room_level;
 
-        public abstract void start();
+        public abstract void start(Player p);
     }
 
 
@@ -27,7 +27,7 @@ namespace rooms
             //todo
         }
 
-        public override void start()
+        public override void start(Player p)
         {
             throw new NotImplementedException();
         }
@@ -58,7 +58,7 @@ namespace rooms
 
         }
 
-        public override void start()
+        public override void start(Player p)
         {
             throw new NotImplementedException();
         }
@@ -86,13 +86,36 @@ namespace rooms
             chance = rnd.Next(40,90);
         }
 
-        public override void start()
+        public override void start(Player p)
         {
             Console.Clear();
+            term.WritePlayerData(p);
             term.Write_Center("You found Healing Fountain\n");
             Console.WriteLine($"[1] Pay {price} gold, heal {heal}hp with {chance}%\n");
             Console.WriteLine("[Other] Leave:\n");
             ConsoleKeyInfo key = Console.ReadKey();
+            if(key.Key == ConsoleKey.D1){
+                buy_state(p);
+            }
+
+        }
+
+        private void buy_state(Player p){
+            term.ClearCurrentConsoleLine();
+            int r = rnd.Next(100);
+            if(p.pay(price))
+            {
+                if((r >= chance && r<=90)){
+                    Console.WriteLine("Success");
+                    p.heal(this.heal);
+                    return;
+                }
+                Console.WriteLine("Healing was not successful");
+                return;
+
+            }
+            Console.WriteLine("Not enough gold coins");
+
         }
 
         int Scale_price(int lvl){

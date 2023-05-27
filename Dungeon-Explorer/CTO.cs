@@ -1,7 +1,27 @@
+using characters;
 namespace cto
 {
     class CTO
     {
+
+        public void WritePlayerData(Player p){
+            Write_Center("Player");
+
+            Console.Write("Level: " + p.get_level() + " | ");
+            Console.Write("Hp: " + p.get_current_hp() + "/" + p.get_max_hp() +" | ");
+            Console.Write("Defence: " + p.get_defence() + " | ");
+            Console.Write("Luck: " + p.get_luck() + " | ");
+            Console.Write("Gold coins: " + p.get_gold_coins() + " | ");
+            Console.Write("Exp: " + p.get_current_exp() + "/" + p.get_exp_to_level() +"");
+            Console.Write("\n");
+
+            for (int i=0;i<Console.WindowWidth;i++){
+                Console.Write("-");
+            }
+            Console.Write("\n");
+
+        }
+
 
         public void ClearCurrentConsoleLine()
         {

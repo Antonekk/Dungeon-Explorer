@@ -1,6 +1,7 @@
 using System;
 using rooms;
 using cto;
+using characters;
 
 namespace dungeon
 {
@@ -11,10 +12,13 @@ namespace dungeon
         bool is_fight;
         Room current_room;
 
+        Player player;
+
         int game_level;
 
         public Dungeon(){
             game_level = 1;
+            player = new Player();
             current_room = new Healing_fountain();
             is_fight = true;
         }
@@ -49,7 +53,7 @@ namespace dungeon
 
         void start_game(){
             while(true){
-                current_room.start();
+                current_room.start(player);
                 current_room = generate_new_room();
             }
 
