@@ -8,7 +8,7 @@ namespace rooms
 {
     abstract class Room
     {
-        protected Random rnd ;
+        protected Random rnd = new Random();
         protected CTO term = new CTO();
         protected int room_level;
 
@@ -29,7 +29,12 @@ namespace rooms
 
         public override void start(Player p)
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            term.WritePlayerData(p);
+            term.Write_Center("You've encountered an enemy\n");
+            ConsoleKeyInfo key = Console.ReadKey();
+
+
         }
 
         public void Start_Fight(){
@@ -51,16 +56,41 @@ namespace rooms
     class Shop : Room
     {
         List<Tuple<int, Item>> available_items;
+        Item_Generator ig;
         public Shop(){
+            ig = new Item_Generator();
+            available_items = new List<Tuple<int, Item>>();
+            add_items();
 
         }
         public Shop(int level){
+            ig = new Item_Generator(level);
+            available_items = new List<Tuple<int, Item>>();
+            add_items();
 
         }
 
+        void add_items(){
+            Tuple <int, Item> t;
+            for (int i=0;i<3;i++){
+                t = Tuple.Create(10, ig.generate_item());
+                available_items.Add(t);
+            }
+
+        }
+
+
+
         public override void start(Player p)
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            term.WritePlayerData(p);
+            term.Write_Center("You found Shop\n");
+            for(int i = 0; i<3; i++){
+                Console.WriteLine($"[{i+1}] Pay {available_items[i].Item1} for {available_items[i].Item2} \n");
+            }
+            Console.WriteLine("[Other] Leave:\n");
+            ConsoleKeyInfo key = Console.ReadKey();
         }
 
     }
@@ -96,6 +126,8 @@ namespace rooms
             ConsoleKeyInfo key = Console.ReadKey();
             if(key.Key == ConsoleKey.D1){
                 buy_state(p);
+                Console.WriteLine("[Any] Go to the next room");
+                ConsoleKeyInfo key2 = Console.ReadKey();
             }
 
         }
@@ -106,15 +138,15 @@ namespace rooms
             if(p.pay(price))
             {
                 if((r >= chance && r<=90)){
-                    Console.WriteLine("Success");
+                    Console.WriteLine("Success\n");
                     p.heal(this.heal);
                     return;
                 }
-                Console.WriteLine("Healing was not successful");
+                Console.WriteLine("Healing was not successful\n");
                 return;
 
             }
-            Console.WriteLine("Not enough gold coins");
+            Console.WriteLine("Not enough gold coins\n");
 
         }
 
