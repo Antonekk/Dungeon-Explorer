@@ -4,7 +4,7 @@ using items;
 
 namespace characters
 {
-    class Character
+    abstract class Character
     {
         protected int max_hp;
         protected int current_hp;
@@ -14,13 +14,9 @@ namespace characters
 
 
 
-        public void Atack(Character atacked){
-            //todo
-        }
+        abstract public void Atack(Character atacked);
 
-        public void Recive_Damage(int dmg){
-            //todo
-        }
+        abstract public void Recive_Damage(int dmg);
 
         bool is_dead(){
             return current_hp <= 0;
@@ -95,14 +91,24 @@ namespace characters
             }
         }
 
-        public int get_gold_coins(){
+        public int get_gold_coins(){ //{get;set}
             return gold_coins;
         }
-        public int get_current_exp(){
+        public int get_current_exp(){ //{get;set}
             return current_exp;
         }
-        public int get_exp_to_level(){
+        public int get_exp_to_level(){ //{get;set}
             return exp_to_level;
+        }
+
+        public override void Atack(Character atacked)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Recive_Damage(int dmg)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -113,6 +119,16 @@ namespace characters
         int gold_to_drop;
         public Enemy(){
             //todo
+        }
+
+        public override void Atack(Character atacked)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Recive_Damage(int dmg)
+        {
+            throw new NotImplementedException();
         }
     }
 }

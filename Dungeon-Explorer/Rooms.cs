@@ -97,7 +97,7 @@ namespace rooms
 
     class Healing_fountain : Room
     {
-        int price;
+        int price; //{get;set}
         int chance;
         int heal;
         public Healing_fountain(){
@@ -121,7 +121,7 @@ namespace rooms
             Console.Clear();
             term.WritePlayerData(p);
             term.Write_Center("You found Healing Fountain\n");
-            Console.WriteLine($"[1] Pay {price} gold, heal {heal}hp with {chance}%\n");
+            Console.WriteLine($"[1] Pay {price} gold, heal {heal}hp with {chance}% success rate\n");
             Console.WriteLine("[Other] Leave:\n");
             ConsoleKeyInfo key = Console.ReadKey();
             if(key.Key == ConsoleKey.D1){
