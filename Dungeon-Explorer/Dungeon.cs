@@ -19,7 +19,7 @@ namespace dungeon
         public Dungeon(){
             game_level = 1;
             player = new Player();
-            current_room = new Healing_fountain();
+            current_room = new Fight_Room();
             is_fight = true;
         }
 
@@ -70,10 +70,10 @@ namespace dungeon
             if(is_fight){
                 is_fight = false;
                 int r = rnd.Next(100);
-                if(r <=15){
+                if(r <=25){
                     return new Shop();
                 }
-                else if(r <= 25){
+                else if(r <= 45){
                     return new Healing_fountain();
                 }
                 else {

@@ -12,6 +12,8 @@ namespace characters
         protected int defence;
         protected int level;
 
+        protected int damage;
+
 
 
         abstract public void Atack(Character atacked);
@@ -37,21 +39,28 @@ namespace characters
         public int get_level(){
             return level;
         }
+        public int get_damage(){
+            return damage;
+        }
 
         protected void character_scale(){
             scale_hp();
             scale_defence();
             scale_luck();
+            scale_damage();
         }
 
         protected void scale_hp(){
-            max_hp = level*10;
+            max_hp = level*50;
         }
         protected void scale_luck(){
             luck = level*3;
         }
         protected void scale_defence(){
             defence = level*5;
+        }
+        protected void scale_damage(){
+            damage = level*10;
         }
     }
 
@@ -61,16 +70,17 @@ namespace characters
         int current_exp;
         int exp_to_level;
         List<Item> items;
+        int bag_size = 3;
 
 
         public Player(){
             level = 1;
-            gold_coins = 5;
+            gold_coins = 35;
             current_exp = 0;
             exp_to_level = 10;
             character_scale();
             current_hp = max_hp;
-            items = new List<Item>();
+            items = new List<Item>{null,null,null};
         }
 
         public bool pay(int gc){
@@ -79,6 +89,26 @@ namespace characters
                 return true;
             }
             return false;
+        }
+
+        public void equip_item(int pos, Item i){
+            if(items[pos] != null){
+                remove_item(i);
+            }
+            add_item(i);
+            items[pos] = i;
+        }
+
+        private void add_item(Item i){
+            defence += i.get_defence();
+            damage += i.get_damage();
+            luck += i.get_luck();
+        }
+
+        private void remove_item(Item i){
+            defence -= i.get_defence();
+            damage -= i.get_damage();
+            luck -= i.get_luck();
         }
 
         public void heal(int h){
@@ -101,6 +131,15 @@ namespace characters
             return exp_to_level;
         }
 
+        public string get_item_string(int n){
+            if(items[n] == null){
+                return "Empty Slot";
+            }
+            return items[n].ToString();
+        }
+
+
+
         public override void Atack(Character atacked)
         {
             throw new NotImplementedException();
@@ -113,13 +152,11 @@ namespace characters
     }
 
 
-    class Enemy : Character
+    abstract class Enemy : Character
     {
         List<Item> items_to_drop;
         int gold_to_drop;
-        public Enemy(){
-            //todo
-        }
+
 
         public override void Atack(Character atacked)
         {

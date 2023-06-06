@@ -73,13 +73,21 @@ namespace rooms
         void add_items(){
             Tuple <int, Item> t;
             for (int i=0;i<3;i++){
-                t = Tuple.Create(10, ig.generate_item());
+                t = Tuple.Create(10, ig.generate_item(i));
                 available_items.Add(t);
             }
 
         }
 
-
+        void buy(int item, Player p){
+            int price = available_items[item].Item1;
+            if (p.pay(price)){
+                Console.WriteLine("You bought" + available_items[item].Item2.ToString() + "\n");
+                p.equip_item(item,available_items[item].Item2);
+                return;
+            }
+            Console.WriteLine("Not enough gold coins\n");
+        }
 
         public override void start(Player p)
         {
@@ -91,6 +99,24 @@ namespace rooms
             }
             Console.WriteLine("[Other] Leave:\n");
             ConsoleKeyInfo key = Console.ReadKey();
+            term.ClearCurrentConsoleLine();
+                switch(key.Key){
+                    case ConsoleKey.D1:
+                        buy(0, p);
+                        break;
+
+                    case ConsoleKey.D2:
+                        buy(1,p);
+                        break;
+
+                    case ConsoleKey.D3:
+                        buy(2,p);
+                        break;
+                    default:
+                        return;
+            }
+            Console.WriteLine("[Any] Go to the next room");
+            ConsoleKeyInfo key2 = Console.ReadKey();
         }
 
     }
