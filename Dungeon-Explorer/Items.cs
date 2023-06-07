@@ -59,21 +59,6 @@ namespace items
             }
             throw new Exception("Wrong item category");
         }
-
-        /*public Item generate_item(){
-            int type = rnd.Next(item_categories.Count);
-            int item_index = rnd.Next(item_categories[type].Item1);
-            switch (type){
-                case 0:
-                    return new Armor(level, item_categories[type].Item2[item_index]);
-                case 1:
-                    return new Weapon(level, item_categories[type].Item2[item_index]);
-                case 2:
-                    return new Talisman(level, item_categories[type].Item2[item_index]);
-            }
-            throw new Exception("Can't generate new item");
-
-        }*/
     }
     abstract class Item
     {

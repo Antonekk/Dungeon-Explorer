@@ -18,7 +18,7 @@ namespace rooms
 
     class Fight_Room : Room
     {
-        Enemy foe;
+        Enemy enemy;
 
         public Fight_Room(){
             //todo
@@ -39,16 +39,16 @@ namespace rooms
 
         public void Start_Fight(){
             //todo
+            // 1. Player attacks by choosing from which side to attack (L M R)
+            // 2. Player can either doge to the left or right to mitigate fall damage if guess is good or stay in the middle to boost next atack
         }
 
-        public bool Has_Ended(){
-            //todo
-            return false;
+        public bool Has_Ended(Player p){
+            return (p.is_dead() || enemy.is_dead());
         }
 
         public bool check_player_win(){
-            //todo
-            return false;
+            return enemy.is_dead();
         }
 
     }
@@ -123,7 +123,7 @@ namespace rooms
 
     class Healing_fountain : Room
     {
-        int price; //{get;set}
+        int price;
         int chance;
         int heal;
         public Healing_fountain(){

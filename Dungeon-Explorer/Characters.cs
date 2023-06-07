@@ -20,7 +20,7 @@ namespace characters
 
         abstract public void Recive_Damage(int dmg);
 
-        bool is_dead(){
+        public bool is_dead(){
             return current_hp <= 0;
         }
 
@@ -168,4 +168,30 @@ namespace characters
             throw new NotImplementedException();
         }
     }
+
+    class Orc : Enemy
+    {
+
+
+        public override void Recive_Damage(int dmg)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class Skeleton : Enemy
+    {
+
+        public override void Atack(Character atacked)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class Goblin : Enemy
+    {
+
+    }
 }
+
+
