@@ -26,7 +26,7 @@ Tutaj gracz za symboliczną opłatą będzie mógł (z pewną procentową szans�
 W tym miejscu Gracz będzie miał za zadanie zawalczyć z przeciwnikiem, aby zyskać złoto, doświadczenie i może nawet przedmioty
 
 ## Przedmioty
-Posiadając dany przedmiot gracz otrzyma przypisane do niego statystyki
+Posiadając dany przedmiot gracz otrzyma przypisane do niego statystyki. 
 Można posiadać tylko jeden przedmiot danego typu
 
 ## Przeciwnicy
