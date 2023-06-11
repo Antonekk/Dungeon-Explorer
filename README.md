@@ -6,6 +6,7 @@ Prosta gra tekstowa polegająca na zwiedzaniu lochów, walce z napotkanymi potwo
 # Opis gry
 
 Krótki opis gry (Może ulec zmianie)
+Celem gry jest przejście jak największej ilości pokoi
 
 ## System walki
 Podczas walki z przeciwnikiem gracz będzie miał do wyboru czy chce wykonać unik czy nie.
@@ -19,14 +20,14 @@ Na swojej drodze gracz będzie mógł natrafić  na trzy rodzaje pokoi
 W tym pokoju gracz za określoną ilość złota będzie mógł zakupić przedmiot
 
 ### Fontanna lecząca
-Tutaj gracz za symboliczną opłatą będzie mógł odzyskać część utraconego zdrowia
-(Prawdopodobnie ulegnie zmianie)
+Tutaj gracz za symboliczną opłatą będzie mógł (z pewną procentową szansą) odzyskać część utraconego zdrowia
 
 ### Pokój walki
 W tym miejscu Gracz będzie miał za zadanie zawalczyć z przeciwnikiem, aby zyskać złoto, doświadczenie i może nawet przedmioty
 
 ## Przedmioty
-Posiadając dany przedmiot gracz otrzyma przypisane do niego statystyki
+Posiadając dany przedmiot gracz otrzyma przypisane do niego statystyki. 
+Można posiadać tylko jeden przedmiot danego typu
 
 ## Przeciwnicy
 Gracz na swojej drodze będzie mógł  napotkać różne rodzaje przeciwników
