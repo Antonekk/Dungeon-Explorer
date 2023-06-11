@@ -18,7 +18,7 @@ namespace characters
 
 
 
-        abstract public void Atack(Character atacked);
+        abstract public void Atack(Character atacked, double bonus);
 
         abstract public void Recive_Damage(int dmg);
 
@@ -157,7 +157,7 @@ namespace characters
 
 
 
-        public override void Atack(Character atacked)
+        public override void Atack(Character atacked, double bonus)
         {
             atacked.Recive_Damage(damage);
 
@@ -201,7 +201,7 @@ namespace characters
         */
 
 
-        public override void Atack(Character atacked)
+        public override void Atack(Character atacked, double bonus)
         {
             atacked.Recive_Damage(damage);
 
