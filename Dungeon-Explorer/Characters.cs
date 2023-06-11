@@ -14,6 +14,8 @@ namespace characters
 
         protected int damage;
 
+        protected Random rnd = new Random();
+
 
 
         abstract public void Atack(Character atacked);
@@ -121,13 +123,28 @@ namespace characters
             }
         }
 
-        public int get_gold_coins(){ //{get;set}
+        public bool is_in_danger(){
+            if(current_hp < max_hp/2){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        public void lose_gold(){
+            int gtd =  Convert.ToInt32((rnd.NextDouble() * (0.60 - 0.40) + 0.15) * gold_coins);
+            gold_coins -= gtd;
+
+        }
+
+        public int get_gold_coins(){
             return gold_coins;
         }
-        public int get_current_exp(){ //{get;set}
+        public int get_current_exp(){
             return current_exp;
         }
-        public int get_exp_to_level(){ //{get;set}
+        public int get_exp_to_level(){
             return exp_to_level;
         }
 
@@ -142,30 +159,62 @@ namespace characters
 
         public override void Atack(Character atacked)
         {
-            throw new NotImplementedException();
+            atacked.Recive_Damage(damage);
+
         }
 
         public override void Recive_Damage(int dmg)
         {
-            throw new NotImplementedException();
+            if(current_hp-dmg <= 0){
+                current_hp = 0;
+            }
+            else{
+                current_hp -= dmg;
+            }
         }
     }
 
 
     abstract class Enemy : Character
     {
-        List<Item> items_to_drop;
+        //Item item_to_drop = null;
+        //protected Random rnd = new Random();
+        //Item_Generator ig;
+        protected string enemy_class = "";
+
         int gold_to_drop;
+
+        private void set_gold(){
+            gold_to_drop =  level * 3;
+        }
+
+        public string get_class_name(){
+            return enemy_class;
+        }
+        /*
+        private void items_to_drop(){
+            if (rnd.Next(0,8) == 0)
+            {
+                item_to_drop = ig.generate_item(rnd.Next(0,3));
+            }
+        }
+        */
 
 
         public override void Atack(Character atacked)
         {
-            throw new NotImplementedException();
+            atacked.Recive_Damage(damage);
+
         }
 
         public override void Recive_Damage(int dmg)
         {
-            throw new NotImplementedException();
+            if(current_hp-dmg <= 0){
+                current_hp = 0;
+            }
+            else{
+                current_hp -= dmg;
+            }
         }
     }
 
@@ -173,23 +222,44 @@ namespace characters
     {
 
 
-        public override void Recive_Damage(int dmg)
+        public Orc (int lvl){
+            enemy_class = "Orc";
+            level = 1;
+            character_scale();
+            current_hp = max_hp;
+        }
+
+        /*public override void Recive_Damage(int dmg)
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 
     class Skeleton : Enemy
     {
 
-        public override void Atack(Character atacked)
+        public Skeleton (int lvl){
+            enemy_class = "Skeleton";
+            level = 1;
+            character_scale();
+            current_hp = max_hp;
+        }
+
+        /*public override void Atack(Character atacked)
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 
     class Goblin : Enemy
     {
+
+        public Goblin (int lvl){
+            enemy_class = "Goblin";
+            level = 1;
+            character_scale();
+            current_hp = max_hp;
+        }
 
     }
 }

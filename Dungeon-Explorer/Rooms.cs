@@ -21,35 +21,92 @@ namespace rooms
         Enemy enemy;
 
         public Fight_Room(){
-            //todo
+            room_level = 1;
+            enemy = generate_enemy();
         }
         public Fight_Room(int lvl){
-            //todo
+            room_level = lvl;
+            enemy = generate_enemy();
+        }
+
+        Enemy generate_enemy(){
+            int e = rnd.Next(1,4);
+            switch(e){
+                case 1:
+                    return new Orc(room_level);
+                case 2:
+                    return new Skeleton(room_level);
+                case 3:
+                    return new Goblin(room_level);
+            }
+            throw new Exception("Wrong character");
         }
 
         public override void start(Player p)
         {
-            Console.Clear();
-            term.WritePlayerData(p);
-            term.Write_Center("You've encountered an enemy\n");
+            Start_Fight(p);
             ConsoleKeyInfo key = Console.ReadKey();
 
 
         }
 
-        public void Start_Fight(){
+        public void Start_Fight(Player p){
             //todo
-            // 1. Player attacks by choosing from which side to attack (L M R)
-            // 2. Player can either doge to the left or right to mitigate fall damage if guess is good or stay in the middle to boost next atack
+            // Player can either focus to boost doge chance or prepare to boost next atack (effects can stack)
+            int doge_chance = 10;
+            double damage_mult = 1.0;
+            while(!enemy.is_dead()){
+                Console.Clear();
+                term.WritePlayerData(p);
+                term.Write_Center($"You've encountered an {enemy.get_class_name()}\n");
+                Console.WriteLine("[1] Atack:\n");
+                Console.WriteLine($"[2] Prepare (Bonus damage) [Current bonus: {damage_mult}]:\n");
+                Console.WriteLine($"[3] Focus (Bonus doge chance) [Current bonus: {doge_chance}]\n");
+                if(p.is_in_danger()){
+                    Console.WriteLine("[4] Run Away (Chance to lose gold )\n");
+                }
+                ConsoleKeyInfo key = Console.ReadKey();
+                switch(key.Key){
+                    case ConsoleKey.D1:
+                        p.Atack(enemy);
+                        break;
+
+                    case ConsoleKey.D2:
+                        damage_mult += (rnd.NextDouble() * (1.25 - 1.0) + 1.0);
+                        break;
+
+                    case ConsoleKey.D3:
+                        int bc = rnd.Next(10,15);
+                        if (doge_chance + bc <= 100){
+                            doge_chance += bc;
+                            break;
+                        }
+                        doge_chance = 100;
+                        break;
+
+                    case ConsoleKey.D4:
+                        p.lose_gold();
+                        Console.WriteLine("You ran away:\n");
+                        return;
+                    default:
+                        break;
+                }
+                if(enemy.is_dead()){
+                    break;
+                }
+
+                enemy.Atack(p);
+                if(p.is_dead()){
+                    Console.WriteLine("You died\n");
+                    System.Environment.Exit(0);
+                }
+
+
+            }
+
+
         }
 
-        public bool Has_Ended(Player p){
-            return (p.is_dead() || enemy.is_dead());
-        }
-
-        public bool check_player_win(){
-            return enemy.is_dead();
-        }
 
     }
 
@@ -71,6 +128,8 @@ namespace rooms
         }
 
         void add_items(){
+            //todo
+            //The way of adding items if weird
             Tuple <int, Item> t;
             for (int i=0;i<3;i++){
                 t = Tuple.Create(10, ig.generate_item(i));
@@ -100,20 +159,20 @@ namespace rooms
             Console.WriteLine("[Other] Leave:\n");
             ConsoleKeyInfo key = Console.ReadKey();
             term.ClearCurrentConsoleLine();
-                switch(key.Key){
-                    case ConsoleKey.D1:
-                        buy(0, p);
-                        break;
+            switch(key.Key){
+                case ConsoleKey.D1:
+                    buy(0, p);
+                    break;
 
-                    case ConsoleKey.D2:
-                        buy(1,p);
-                        break;
+                case ConsoleKey.D2:
+                    buy(1,p);
+                    break;
 
-                    case ConsoleKey.D3:
-                        buy(2,p);
-                        break;
-                    default:
-                        return;
+                case ConsoleKey.D3:
+                    buy(2,p);
+                    break;
+                default:
+                    return;
             }
             Console.WriteLine("[Any] Go to the next room");
             ConsoleKeyInfo key2 = Console.ReadKey();
@@ -127,7 +186,6 @@ namespace rooms
         int chance;
         int heal;
         public Healing_fountain(){
-            rnd = new Random();
             room_level = 1;
             price = Scale_price(room_level);
             heal = Scale_hp(room_level);
@@ -135,7 +193,6 @@ namespace rooms
 
         }
         public Healing_fountain(int level){
-            rnd = new Random();
             room_level = level;
             price = Scale_price(room_level);
             heal = Scale_hp(room_level);
