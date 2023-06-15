@@ -58,7 +58,7 @@ namespace rooms
             while(!enemy.is_dead()){
                 Console.Clear();
                 term.WritePlayerData(p);
-                term.Write_Center($"You've encountered  [{enemy.get_class_name()} {enemy.get_current_hp()}/{enemy.get_max_hp()}]\n");
+                term.Write_Center($"You've encountered  [{enemy.get_class_name()} {enemy.get_current_hp()}/{enemy.max_hp}]\n");
                 Console.WriteLine("[1] Atack:\n");
                 Console.WriteLine($"[2] Prepare (Bonus damage) [Current bonus: {damage_mult}]:\n");
                 Console.WriteLine($"[3] Focus (Bonus doge chance) [Current bonus: {doge_chance}]\n");

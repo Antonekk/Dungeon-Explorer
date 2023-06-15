@@ -6,7 +6,7 @@ namespace characters
 {
     abstract class Character
     {
-        protected int max_hp;
+        public int max_hp {get; private set;} //Change all the others
         protected int current_hp;
         protected int luck;
         protected int defence;
@@ -26,9 +26,7 @@ namespace characters
             return current_hp <= 0;
         }
 
-        public int get_max_hp(){
-            return max_hp;
-        }
+
         public int get_current_hp(){
             return current_hp;
         }
@@ -159,12 +157,18 @@ namespace characters
 
         public override void Atack(Character atacked, double bonus)
         {
-            atacked.Recive_Damage(damage);
+            atacked.Recive_Damage(Convert.ToInt32(damage*bonus));
 
         }
 
         public override void Recive_Damage(int dmg)
         {
+            if(dmg >= defence){
+                dmg -= defence;
+            }
+            else{
+                dmg = 0;
+            }
             if(current_hp-dmg <= 0){
                 current_hp = 0;
             }
@@ -229,10 +233,22 @@ namespace characters
             current_hp = max_hp;
         }
 
-        /*public override void Recive_Damage(int dmg)
+
+        public override void Recive_Damage(int dmg)
         {
-            throw new NotImplementedException();
-        }*/
+            if(dmg >= defence){
+                dmg -= defence;
+            }
+            else{
+                dmg = 0;
+            }
+            if(current_hp-dmg <= 0){
+                current_hp = 0;
+            }
+            else{
+                current_hp -= dmg;
+            }
+        }
     }
 
     class Skeleton : Enemy
