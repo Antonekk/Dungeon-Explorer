@@ -91,6 +91,10 @@ namespace characters
             return false;
         }
 
+        public void add_gold(int g){
+            gold_coins += g;
+        }
+
         public void equip_item(int pos, Item i){
             if(items[pos] != null){
                 remove_item(i);
@@ -130,10 +134,18 @@ namespace characters
             }
         }
 
-        public void lose_gold(){
+        private void lose_gold(){
             int gtd =  Convert.ToInt32((rnd.NextDouble() * (0.60 - 0.40) + 0.15) * gold_coins);
             gold_coins -= gtd;
 
+        }
+
+        public void run_away(){
+            lose_gold();
+            current_hp -= Convert.ToInt32( 0.10 * max_hp);
+            if( current_hp < 0){
+                current_hp = 0;
+            }
         }
 
         public int get_gold_coins(){
@@ -163,6 +175,12 @@ namespace characters
 
         public override void Recive_Damage(int dmg)
         {
+
+            if(rnd.Next(1, 101) < luck){
+                Console.WriteLine("Doged");
+                return;
+            }
+
             if(dmg >= defence){
                 dmg -= defence;
             }
@@ -190,6 +208,13 @@ namespace characters
 
         private void set_gold(){
             gold_to_drop =  level * 3;
+        }
+
+        public int drop_gold(){
+            if (is_dead()){
+                return gold_to_drop;
+            }
+            throw new Exception("Can't drop gold");
         }
 
         public string get_class_name(){
@@ -261,10 +286,16 @@ namespace characters
             current_hp = max_hp;
         }
 
-        /*public override void Atack(Character atacked)
+        public override void Atack(Character atacked, double bonus)
         {
-            throw new NotImplementedException();
-        }*/
+            atacked.Recive_Damage(damage);
+            if(rnd.Next(1) == 0){
+                atacked.Recive_Damage(damage);
+                Console.WriteLine("Skeleton attacked twice");
+            };
+
+        }
+
     }
 
     class Goblin : Enemy

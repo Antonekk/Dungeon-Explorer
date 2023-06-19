@@ -60,10 +60,10 @@ namespace rooms
                 term.WritePlayerData(p);
                 term.Write_Center($"You've encountered  [{enemy.get_class_name()} {enemy.get_current_hp()}/{enemy.max_hp}]\n");
                 Console.WriteLine("[1] Atack:\n");
-                Console.WriteLine($"[2] Prepare (Bonus damage) [Current bonus: {damage_mult}]:\n");
+                Console.WriteLine($"[2] Prepare (Bonus damage) [Current multiplier: {damage_mult}]:\n");
                 Console.WriteLine($"[3] Focus (Bonus doge chance) [Current bonus: {doge_chance}]\n");
                 if(p.is_in_danger()){
-                    Console.WriteLine("[4] Run Away (Chance to lose gold )\n");
+                    Console.WriteLine("[4] Run Away (-10% of max health ) (Chance to lose gold )\n");
                 }
                 ConsoleKeyInfo key = Console.ReadKey();
                 switch(key.Key){
@@ -85,26 +85,32 @@ namespace rooms
                         break;
 
                     case ConsoleKey.D4:
-                        p.lose_gold();
+                        p.run_away();
+                        is_dead_info(p);
                         Console.WriteLine("You ran away:\n");
                         return;
                     default:
                         break;
                 }
                 if(enemy.is_dead()){
+                    p.add_gold(enemy.drop_gold());
                     break;
                 }
 
                 enemy.Atack(p,1);
-                if(p.is_dead()){
-                    Console.WriteLine("You died\n");
-                    System.Environment.Exit(0);
-                }
+                is_dead_info(p);
 
 
             }
 
 
+        }
+
+        private void is_dead_info(Player p){
+            if(p.is_dead()){
+                    Console.WriteLine("You died\n");
+                    System.Environment.Exit(0);
+            }
         }
 
 
