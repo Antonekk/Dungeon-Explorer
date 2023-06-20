@@ -60,7 +60,7 @@ namespace rooms
                 term.WritePlayerData(p);
                 term.Write_Center($"You've encountered  [{enemy.get_class_name()} {enemy.get_current_hp()}/{enemy.max_hp}]\n");
                 Console.WriteLine("[1] Atack:\n");
-                Console.WriteLine($"[2] Prepare (Bonus damage) [Current multiplier: {damage_mult}]:\n");
+                Console.WriteLine($"[2] Prepare (Damage multiplier) [Current multiplier: {Math.Round(damage_mult, 2)}x]:\n");
                 Console.WriteLine($"[3] Focus (Bonus doge chance) [Current bonus: {doge_chance}]\n");
                 if(p.is_in_danger()){
                     Console.WriteLine("[4] Run Away (-10% of max health ) (Chance to lose gold )\n");
@@ -97,7 +97,16 @@ namespace rooms
                     break;
                 }
 
-                enemy.Atack(p,1);
+
+                if(rnd.Next(1, 101) < doge_chance){
+                    Console.Write("\n");
+                    Console.WriteLine("Doged");
+                    Thread.Sleep(1000);
+                }
+                else{
+                    enemy.Atack(p,1);
+                }
+
                 is_dead_info(p);
 
 
@@ -195,14 +204,14 @@ namespace rooms
             room_level = 1;
             price = Scale_price(room_level);
             heal = Scale_hp(room_level);
-            chance = rnd.Next(40,90);
+            chance = rnd.Next(75,100);
 
         }
         public Healing_fountain(int level){
             room_level = level;
             price = Scale_price(room_level);
             heal = Scale_hp(room_level);
-            chance = rnd.Next(40,90);
+            chance = rnd.Next(75,100);
         }
 
         public override void start(Player p)

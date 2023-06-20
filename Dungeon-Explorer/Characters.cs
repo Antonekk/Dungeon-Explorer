@@ -51,10 +51,10 @@ namespace characters
         }
 
         protected void scale_hp(){
-            max_hp = level*50;
+            max_hp = level*100;
         }
         protected void scale_luck(){
-            luck = level*3;
+            luck = level*10;
         }
         protected void scale_defence(){
             defence = level*5;
@@ -199,9 +199,6 @@ namespace characters
 
     abstract class Enemy : Character
     {
-        //Item item_to_drop = null;
-        //protected Random rnd = new Random();
-        //Item_Generator ig;
         protected string enemy_class = "";
 
         int gold_to_drop;
@@ -220,15 +217,6 @@ namespace characters
         public string get_class_name(){
             return enemy_class;
         }
-        /*
-        private void items_to_drop(){
-            if (rnd.Next(0,8) == 0)
-            {
-                item_to_drop = ig.generate_item(rnd.Next(0,3));
-            }
-        }
-        */
-
 
         public override void Atack(Character atacked, double bonus)
         {
@@ -289,7 +277,7 @@ namespace characters
         public override void Atack(Character atacked, double bonus)
         {
             atacked.Recive_Damage(damage);
-            if(rnd.Next(1) == 0){
+            if(rnd.Next(3) == 0){
                 atacked.Recive_Damage(damage);
                 Console.WriteLine("Skeleton attacked twice");
             };
@@ -307,6 +295,25 @@ namespace characters
             character_scale();
             current_hp = max_hp;
         }
+
+
+        public override void Recive_Damage(int dmg)
+        {
+
+            if(rnd.Next(1, 101) < luck){
+                Console.WriteLine("Goblin doged\n");
+                return;
+            }
+
+            if(current_hp-dmg <= 0){
+                current_hp = 0;
+            }
+            else{
+                current_hp -= dmg;
+            }
+        }
+
+
 
     }
 }
