@@ -32,6 +32,6 @@ Można posiadać tylko jeden przedmiot danego typu
 ## Przeciwnicy
 Gracz na swojej drodze będzie mógł  napotkać różne rodzaje przeciwników
 
-### Ork (dodatkowa umiejętność podczas obrony)
-### Szkielet (dodatkowa umiejętność podczas ataku)
-### Goblin (dodatkowa umiejętność podczas ucieczki gracza)
+### Ork (przyjmuje mniej obrażeń)
+### Szkielet (szansa na zaatakowanie dwukrotnie)
+### Goblin (szansa na unik)
