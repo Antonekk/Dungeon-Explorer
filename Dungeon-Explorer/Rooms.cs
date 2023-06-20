@@ -94,6 +94,7 @@ namespace rooms
                 }
                 if(enemy.is_dead()){
                     p.add_gold(enemy.drop_gold());
+                    p.add_exp(rnd.Next(Convert.ToInt32(p.get_exp_to_level()*0.40), Convert.ToInt32(p.get_exp_to_level()*0.75)));
                     break;
                 }
 

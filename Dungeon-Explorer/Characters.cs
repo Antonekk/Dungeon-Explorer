@@ -77,7 +77,7 @@ namespace characters
             level = 1;
             gold_coins = 35;
             current_exp = 0;
-            exp_to_level = 10;
+            scale_exp();
             character_scale();
             current_hp = max_hp;
             items = new List<Item>{null,null,null};
@@ -163,6 +163,24 @@ namespace characters
                 return "Empty Slot";
             }
             return items[n].ToString();
+        }
+
+        public void add_exp(int e){
+            while (e != 0){
+                if(current_exp + e > exp_to_level){
+                    level += 1;
+                    e -=  (exp_to_level - current_exp );
+                    scale_exp();
+                }
+                else{
+                    current_exp += e;
+                    e = 0;
+                }
+            }
+        }
+
+        private void scale_exp(){
+            exp_to_level = level*10;
         }
 
 
