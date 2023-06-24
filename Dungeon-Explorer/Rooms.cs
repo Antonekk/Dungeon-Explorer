@@ -118,8 +118,9 @@ namespace rooms
 
         private void is_dead_info(Player p){
             if(p.is_dead()){
-                    Console.WriteLine("You died\n");
-                    System.Environment.Exit(0);
+                Console.Clear();
+                term.Write_Center($"You died in room {room_level}");
+                System.Environment.Exit(0);
             }
         }
 

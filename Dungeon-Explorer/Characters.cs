@@ -55,16 +55,16 @@ namespace characters
         }
 
         virtual protected void scale_hp(){
-            max_hp = level*100;
+            max_hp = 95 + (int)(Math.Ceiling(Math.Log(level*100))) + (level-1)*10 ;
         }
         virtual protected void scale_luck(){
-            luck = level*10;
+            luck = 8 + (int)(Math.Ceiling(Math.Log(level*50))) + (level-1)*2;
         }
         virtual protected void scale_defence(){
-            defence = level*5;
+            defence = 3 + (int)(Math.Ceiling(Math.Log(level*50))) + (level-1)*2;
         }
         virtual protected void scale_damage(){
-            damage = level*10;
+            damage = 8 + (int)(Math.Ceiling(Math.Log(level*60))) + (level-1)*5;
         }
 
 
@@ -176,6 +176,7 @@ namespace characters
             while (e != 0){
                 if(current_exp + e > exp_to_level){
                     level += 1;
+                    character_scale();
                     e -=  (exp_to_level - current_exp );
                     scale_exp();
                 }
@@ -229,7 +230,7 @@ namespace characters
         int gold_to_drop;
 
         protected void set_gold(){
-            gold_to_drop =  10;
+            gold_to_drop =  level*rnd.Next(9,13);
         }
 
         public int drop_gold(){
@@ -267,16 +268,16 @@ namespace characters
         }
 
         protected override void scale_hp(){
-            max_hp = level*20;
+            max_hp = 20 + (int)(Math.Ceiling(Math.Log(level*100))) + (level-1)*5 ;
         }
         protected override void scale_luck(){
-            luck = level*10;
+            luck = 8 + (int)(Math.Ceiling(Math.Log(level*50))) + (level-1)*2;
         }
         protected override void scale_defence(){
-            defence = level*3;
+            defence = 2 + (int)(Math.Ceiling(Math.Log(level*50))) + (level-1)*2;
         }
         protected override void scale_damage(){
-            damage = level*10;
+            damage = 3 + (int)(Math.Ceiling(Math.Log(level*60))) + (level-1)*3;
         }
     }
 

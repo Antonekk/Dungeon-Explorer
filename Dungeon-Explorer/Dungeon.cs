@@ -78,12 +78,12 @@ namespace dungeon
                     return new Healing_fountain(game_level);
                 }
                 else {
-                    return new Fight_Room(1);
+                    return new Fight_Room(game_level);
                 }
             }
             else{
                 is_fight = true;
-                return new Fight_Room(1);
+                return new Fight_Room(game_level);
             }
 
         }
