@@ -62,6 +62,7 @@ namespace items
     }
     abstract class Item
     {
+        Random rnd = new Random();
         protected string item_name = "";
         protected int item_level;
         protected int bonus_defence ;
@@ -69,7 +70,11 @@ namespace items
         protected int bonus_damage;
 
         protected int scale_level(){
-            return item_level*3; //todo
+            return item_level*3;
+        }
+
+        protected int scale_side(){
+            return rnd.Next((int)((item_level*3)*0.25));
         }
 
         public override string ToString()
@@ -106,8 +111,8 @@ namespace items
         public Armor(int level , string name){
             item_name = name;
             item_level = level;
-            bonus_defence = 0;
-            bonus_luck = 0;
+            bonus_defence = scale_side();
+            bonus_luck = scale_side();
             bonus_damage = scale_level();
         }
 
@@ -127,8 +132,8 @@ namespace items
         public Weapon(int level , string name){
             item_name = name;
             item_level = level;
-            bonus_damage = 0;
-            bonus_luck = 0;
+            bonus_damage = scale_side();
+            bonus_luck = scale_side();
             bonus_defence = scale_level();
         }
 
@@ -147,8 +152,8 @@ namespace items
         public Talisman(int level , string name){
             item_name = name;
             item_level = level;
-            bonus_damage = 0;
-            bonus_defence = 0;
+            bonus_damage = scale_side();
+            bonus_defence = scale_side();
             bonus_luck = scale_level();
         }
 

@@ -64,6 +64,8 @@ namespace dungeon
             Console.Clear();
             term.Write_Center("Game Info");
             Console.WriteLine("[Click any button to return]");
+            string text = File.ReadAllText("game_info.txt");
+            Console.WriteLine(text);
             Console.ReadKey();
         }
 

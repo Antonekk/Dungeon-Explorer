@@ -95,12 +95,14 @@ namespace rooms
                 if(enemy.is_dead()){
                     p.add_gold(enemy.drop_gold());
                     p.add_exp(rnd.Next(Convert.ToInt32(p.get_exp_to_level()*0.40), Convert.ToInt32(p.get_exp_to_level()*0.75)));
+                    term.ClearCurrentConsoleLine();
+                    Console.Write($"[Any] Enemy died, and droped {enemy.drop_gold()} gold\n");
                     break;
                 }
 
 
                 if(rnd.Next(1, 101) < doge_chance){
-                    Console.Write("\n");
+                    term.ClearCurrentConsoleLine();
                     Console.WriteLine("Doged");
                     Thread.Sleep(1000);
                 }
@@ -149,8 +151,6 @@ namespace rooms
         }
 
         void add_items(){
-            //todo
-            //The way of adding items is weird
             Tuple <int, Item> t;
             for (int i=0;i<3;i++){
                 t = Tuple.Create(generate_price(), ig.generate_item(i));
@@ -166,7 +166,7 @@ namespace rooms
             int price = available_items[item].Item1;
             if (p.pay(price)){
                 Console.WriteLine("You bought" + available_items[item].Item2.ToString() + "\n");
-                p.equip_item(item,available_items[item].Item2);
+                p.equip_item(available_items[item].Item2);
                 return;
             }
             Console.WriteLine("Not enough gold coins\n");
@@ -208,19 +208,16 @@ namespace rooms
     {
         int price;
         int chance;
-        int heal;
         public Healing_fountain(){
             room_level = 1;
             price = Scale_price(room_level);
-            heal = Scale_hp(room_level);
-            chance = rnd.Next(75,100);
+            chance = rnd.Next(90,100);
 
         }
         public Healing_fountain(int level){
             room_level = level;
             price = Scale_price(room_level);
-            heal = Scale_hp(room_level);
-            chance = rnd.Next(75,100);
+            chance = rnd.Next(90,100);
         }
 
         public override void start(Player p)
@@ -228,7 +225,7 @@ namespace rooms
             Console.Clear();
             term.WritePlayerData(p);
             term.Write_Center("You found Healing Fountain\n");
-            Console.WriteLine($"[1] Pay {price} gold, heal {heal}hp with {chance}% success rate\n");
+            Console.WriteLine($"[1] Pay {price} gold, heal to max hp with {chance}% success rate\n");
             Console.WriteLine("[Other] Leave:\n");
             ConsoleKeyInfo key = Console.ReadKey();
             if(key.Key == ConsoleKey.D1){
@@ -244,9 +241,9 @@ namespace rooms
             int r = rnd.Next(101);
             if(p.pay(price))
             {
-                if((r >= chance && r<101)){
+                if((r <= chance)){
                     Console.WriteLine("Success\n");
-                    p.heal(this.heal);
+                    p.heal();
                     return;
                 }
                 Console.WriteLine("Healing was not successful\n");
@@ -260,10 +257,6 @@ namespace rooms
         int Scale_price(int lvl){
             int xlvl = 2*lvl;
             return (xlvl* (int)(Math.Ceiling(Math.Log(xlvl))));
-        }
-        int Scale_hp(int lvl){
-            int xlvl = 5*lvl;
-            return (xlvl* (int)(Math.Ceiling(Math.Log(xlvl)))) ;
         }
     }
 }

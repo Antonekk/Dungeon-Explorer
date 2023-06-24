@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using items;
+using cto;
 
 namespace characters
 {
@@ -15,6 +16,7 @@ namespace characters
         protected int damage;
 
         protected Random rnd = new Random();
+        protected CTO term = new CTO();
 
 
 
@@ -64,7 +66,7 @@ namespace characters
             defence = 3 + (int)(Math.Ceiling(Math.Log(level*50))) + (level-1)*2;
         }
         virtual protected void scale_damage(){
-            damage = 8 + (int)(Math.Ceiling(Math.Log(level*60))) + (level-1)*5;
+            damage = 8 + (int)(Math.Ceiling(Math.Log(level*60))) + (level-1)*4;
         }
 
 
@@ -75,7 +77,7 @@ namespace characters
         int gold_coins;
         int current_exp;
         int exp_to_level;
-        List<Item> items;
+        IDictionary<string, Item> items;
         int bag_size = 3;
 
 
@@ -86,7 +88,7 @@ namespace characters
             scale_exp();
             character_scale();
             current_hp = max_hp;
-            items = new List<Item>{null,null,null};
+            items = new Dictionary<string, Item>();
         }
 
 
@@ -102,12 +104,12 @@ namespace characters
             gold_coins += g;
         }
 
-        public void equip_item(int pos, Item i){
-            if(items[pos] != null){
+        public void equip_item(Item i){
+            if(items.ContainsKey(i.GetType().Name)){
                 remove_item(i);
             }
             add_item(i);
-            items[pos] = i;
+            items[i.GetType().Name] = i;
         }
 
         private void add_item(Item i){
@@ -122,14 +124,8 @@ namespace characters
             luck -= i.get_luck();
         }
 
-        public void heal(int h){
-            int hp_increase = h+current_hp;
-            if(hp_increase >= max_hp){
-                current_hp = max_hp;
-            }
-            else{
-                current_hp = hp_increase;
-            }
+        public void heal(){
+            current_hp = max_hp;
         }
 
         public bool is_in_danger(){
@@ -165,11 +161,8 @@ namespace characters
             return exp_to_level;
         }
 
-        public string get_item_string(int n){
-            if(items[n] == null){
-                return "Empty Slot";
-            }
-            return items[n].ToString();
+        public List<items.Item> get_items(){
+            return items.Values.ToList();
         }
 
         public void add_exp(int e){
@@ -203,7 +196,9 @@ namespace characters
         {
 
             if(rnd.Next(1, 101) < luck){
+                term.ClearCurrentConsoleLine();
                 Console.WriteLine("Doged");
+                Thread.Sleep(1000);
                 return;
             }
 
@@ -268,10 +263,13 @@ namespace characters
         }
 
         protected override void scale_hp(){
-            max_hp = 20 + (int)(Math.Ceiling(Math.Log(level*100))) + (level-1)*5 ;
+            max_hp = 20 + (int)(Math.Ceiling(Math.Log(level*100))) + (level-1)*8 ;
         }
         protected override void scale_luck(){
             luck = 8 + (int)(Math.Ceiling(Math.Log(level*50))) + (level-1)*2;
+            if(luck > 80){
+                luck = 80;
+            }
         }
         protected override void scale_defence(){
             defence = 2 + (int)(Math.Ceiling(Math.Log(level*50))) + (level-1)*2;
@@ -327,7 +325,9 @@ namespace characters
             atacked.Recive_Damage(damage);
             if(rnd.Next(3) == 0){
                 atacked.Recive_Damage(damage);
+                Console.Write("\n");
                 Console.WriteLine("Skeleton attacked twice");
+                Thread.Sleep(1000);
             };
 
         }
@@ -350,7 +350,9 @@ namespace characters
         {
 
             if(rnd.Next(1, 101) < luck){
-                Console.WriteLine("Goblin doged\n");
+                term.ClearCurrentConsoleLine();
+                Console.WriteLine("Goblin doged");
+                Thread.Sleep(1000);
                 return;
             }
 

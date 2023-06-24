@@ -9,28 +9,30 @@ Krótki opis gry (Może ulec zmianie)
 Celem gry jest przejście jak największej ilości pokoi
 
 ## System walki
-Podczas walki z przeciwnikiem gracz będzie miał do wyboru czy chce wykonać unik czy nie.
-W przypadku nie wykonania uniku szansa na trafienie przeciwnika wzrasta natomiast zwiększona jest szansa na otrzymanie ciosu od przeciwnika.
-Podczas walki, gdy zdrowie gracza spadnie poniżej 50% otrzyma ona szanse na ucieczkę z pojedynku gubiąc przy tym losową część złota.
+Podczas walki z przeciwnikiem gracz będzie miał do wyboru
+1. Zadać obrażenia przeciwnikowi
+2. Zwiększyć mnożnik obrażeń
+3. Zwiększyć szansę na unik
+Podczas walki, gdy zdrowie gracza spadnie poniżej 50% otrzyma ona szanse na ucieczkę z pojedynku gubiąc przy tym losową część złota oraz tracąc część zdrowia.
 
 ## Pokoje
 
 Na swojej drodze gracz będzie mógł natrafić  na trzy rodzaje pokoi
-### Sklep 
+### Sklep
 W tym pokoju gracz za określoną ilość złota będzie mógł zakupić przedmiot
 
 ### Fontanna lecząca
-Tutaj gracz za symboliczną opłatą będzie mógł (z pewną procentową szansą) odzyskać część utraconego zdrowia
+Tutaj gracz za symboliczną opłatą będzie mógł (z pewną procentową szansą) odzyskać utracone zdrowie
 
 ### Pokój walki
-W tym miejscu Gracz będzie miał za zadanie zawalczyć z przeciwnikiem, aby zyskać złoto, doświadczenie i może nawet przedmioty
+W tym miejscu Gracz będzie miał za zadanie zawalczyć z przeciwnikiem, aby zyskać złoto, doświadczenie
 
 ## Przedmioty
-Posiadając dany przedmiot gracz otrzyma przypisane do niego statystyki. 
+Posiadając dany przedmiot gracz otrzyma przypisane do niego statystyki.
 Można posiadać tylko jeden przedmiot danego typu
 
 ## Przeciwnicy
-Gracz na swojej drodze będzie mógł  napotkać różne rodzaje przeciwników
+Gracz na swojej drodze będzie mógł napotkać różne rodzaje przeciwników
 
 ### Ork (przyjmuje mniej obrażeń)
 ### Szkielet (szansa na zaatakowanie dwukrotnie)

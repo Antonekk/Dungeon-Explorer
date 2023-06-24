@@ -15,8 +15,9 @@ namespace cto
             Console.Write("Gold coins: " + p.get_gold_coins() + " | ");
             Console.Write("Exp: " + p.get_current_exp() + "/" + p.get_exp_to_level() +"\n");
             Console.Write("Equipment " );
-            for (int i = 0; i<3; i++){
-                Console.Write(" | " + p.get_item_string(i));
+            List<items.Item> all_items = p.get_items();
+            for (int i = 0; i<all_items.Count; i++){
+                Console.Write(" | " + all_items[i].ToString());
             }
             Console.Write("\n");
 
