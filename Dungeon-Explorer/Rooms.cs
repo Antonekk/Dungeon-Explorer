@@ -58,7 +58,7 @@ namespace rooms
             while(!enemy.is_dead()){
                 Console.Clear();
                 term.WritePlayerData(p);
-                term.Write_Center($"You've encountered  [{enemy.get_class_name()} {enemy.get_current_hp()}/{enemy.max_hp}]\n");
+                term.Write_Center($"You've encountered  [{enemy.get_class_name()} {enemy.get_current_hp()}/{enemy.get_max_hp()}]\n");
                 Console.WriteLine("[1] Atack:\n");
                 Console.WriteLine($"[2] Prepare (Damage multiplier) [Current multiplier: {Math.Round(damage_mult, 2)}x]:\n");
                 Console.WriteLine($"[3] Focus (Bonus doge chance) [Current bonus: {doge_chance}]\n");
@@ -131,27 +131,34 @@ namespace rooms
         List<Tuple<int, Item>> available_items;
         Item_Generator ig;
         public Shop(){
+            room_level = 1;
             ig = new Item_Generator();
             available_items = new List<Tuple<int, Item>>();
             add_items();
 
+
         }
         public Shop(int level){
+            room_level = level;
             ig = new Item_Generator(level);
             available_items = new List<Tuple<int, Item>>();
             add_items();
+
 
         }
 
         void add_items(){
             //todo
-            //The way of adding items if weird
+            //The way of adding items is weird
             Tuple <int, Item> t;
             for (int i=0;i<3;i++){
-                t = Tuple.Create(10, ig.generate_item(i));
+                t = Tuple.Create(generate_price(), ig.generate_item(i));
                 available_items.Add(t);
             }
+        }
 
+        int generate_price(){
+            return room_level * rnd.Next(8,11);
         }
 
         void buy(int item, Player p){
@@ -233,10 +240,10 @@ namespace rooms
 
         private void buy_state(Player p){
             term.ClearCurrentConsoleLine();
-            int r = rnd.Next(100);
+            int r = rnd.Next(101);
             if(p.pay(price))
             {
-                if((r >= chance && r<=90)){
+                if((r >= chance && r<101)){
                     Console.WriteLine("Success\n");
                     p.heal(this.heal);
                     return;

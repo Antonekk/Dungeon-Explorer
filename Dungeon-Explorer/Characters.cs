@@ -6,7 +6,7 @@ namespace characters
 {
     abstract class Character
     {
-        public int max_hp {get; private set;} //Change all the others
+        protected int max_hp;
         protected int current_hp;
         protected int luck;
         protected int defence;
@@ -27,6 +27,10 @@ namespace characters
         }
 
 
+        public int get_max_hp(){
+            return max_hp;
+        }
+
         public int get_current_hp(){
             return current_hp;
         }
@@ -43,25 +47,27 @@ namespace characters
             return damage;
         }
 
-        protected void character_scale(){
+        virtual protected void character_scale(){
             scale_hp();
             scale_defence();
             scale_luck();
             scale_damage();
         }
 
-        protected void scale_hp(){
+        virtual protected void scale_hp(){
             max_hp = level*100;
         }
-        protected void scale_luck(){
+        virtual protected void scale_luck(){
             luck = level*10;
         }
-        protected void scale_defence(){
+        virtual protected void scale_defence(){
             defence = level*5;
         }
-        protected void scale_damage(){
+        virtual protected void scale_damage(){
             damage = level*10;
         }
+
+
     }
 
     class Player : Character
@@ -82,6 +88,7 @@ namespace characters
             current_hp = max_hp;
             items = new List<Item>{null,null,null};
         }
+
 
         public bool pay(int gc){
             if (gc<=gold_coins){
@@ -221,8 +228,8 @@ namespace characters
 
         int gold_to_drop;
 
-        private void set_gold(){
-            gold_to_drop =  level * 3;
+        protected void set_gold(){
+            gold_to_drop =  10;
         }
 
         public int drop_gold(){
@@ -251,6 +258,26 @@ namespace characters
                 current_hp -= dmg;
             }
         }
+
+        protected override void character_scale(){
+            scale_hp();
+            scale_defence();
+            scale_luck();
+            scale_damage();
+        }
+
+        protected override void scale_hp(){
+            max_hp = level*20;
+        }
+        protected override void scale_luck(){
+            luck = level*10;
+        }
+        protected override void scale_defence(){
+            defence = level*3;
+        }
+        protected override void scale_damage(){
+            damage = level*10;
+        }
     }
 
     class Orc : Enemy
@@ -259,8 +286,9 @@ namespace characters
 
         public Orc (int lvl){
             enemy_class = "Orc";
-            level = 1;
+            level = lvl;
             character_scale();
+            set_gold();
             current_hp = max_hp;
         }
 
@@ -287,8 +315,9 @@ namespace characters
 
         public Skeleton (int lvl){
             enemy_class = "Skeleton";
-            level = 1;
+            level = lvl;
             character_scale();
+            set_gold();
             current_hp = max_hp;
         }
 
@@ -309,8 +338,9 @@ namespace characters
 
         public Goblin (int lvl){
             enemy_class = "Goblin";
-            level = 1;
+            level = lvl;
             character_scale();
+            set_gold();
             current_hp = max_hp;
         }
 

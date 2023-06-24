@@ -55,6 +55,7 @@ namespace dungeon
             while(true){
                 current_room.start(player);
                 current_room = generate_new_room();
+                game_level++;
             }
 
         }
@@ -71,18 +72,18 @@ namespace dungeon
                 is_fight = false;
                 int r = rnd.Next(100);
                 if(r <=25){
-                    return new Shop();
+                    return new Shop(game_level);
                 }
                 else if(r <= 45){
-                    return new Healing_fountain();
+                    return new Healing_fountain(game_level);
                 }
                 else {
-                    return new Fight_Room();
+                    return new Fight_Room(1);
                 }
             }
             else{
                 is_fight = true;
-                return new Fight_Room();
+                return new Fight_Room(1);
             }
 
         }

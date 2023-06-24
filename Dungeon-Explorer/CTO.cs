@@ -8,7 +8,7 @@ namespace cto
             Write_Center("Player");
 
             Console.Write("Level: " + p.get_level() + " | ");
-            Console.Write("Hp: " + p.get_current_hp() + "/" + p.max_hp +" | ");
+            Console.Write("Hp: " + p.get_current_hp() + "/" + p.get_max_hp() +" | ");
             Console.Write("Defence: " + p.get_defence() + " | ");
             Console.Write("Luck: " + p.get_luck() + " | ");
             Console.Write("Damage: " + p.get_damage() + " | ");
