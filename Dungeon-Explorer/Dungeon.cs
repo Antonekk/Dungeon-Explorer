@@ -72,7 +72,7 @@ namespace dungeon
         Room generate_new_room(){
             if(is_fight){
                 is_fight = false;
-                int r = rnd.Next(100);
+                int r = rnd.Next(101);
                 if(r <=25){
                     return new Shop(game_level);
                 }

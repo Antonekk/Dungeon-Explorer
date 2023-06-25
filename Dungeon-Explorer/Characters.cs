@@ -195,7 +195,7 @@ namespace characters
         public override void Recive_Damage(int dmg)
         {
 
-            if(rnd.Next(1, 101) < luck){
+            if(rnd.Next(101) < luck){
                 term.ClearCurrentConsoleLine();
                 Console.WriteLine("Doged");
                 Thread.Sleep(1000);
@@ -225,7 +225,7 @@ namespace characters
         int gold_to_drop;
 
         protected void set_gold(){
-            gold_to_drop =  level*rnd.Next(9,13);
+            gold_to_drop =  level*rnd.Next(9,14);
         }
 
         public int drop_gold(){
@@ -348,8 +348,14 @@ namespace characters
 
         public override void Recive_Damage(int dmg)
         {
-
-            if(rnd.Next(1, 101) < luck){
+            int l;
+            if(luck>80){
+                l = 80;
+            }
+            else{
+                l = luck;
+            }
+            if(rnd.Next(101) < l){
                 term.ClearCurrentConsoleLine();
                 Console.WriteLine("Goblin doged");
                 Thread.Sleep(1000);
