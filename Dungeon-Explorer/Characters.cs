@@ -20,9 +20,21 @@ namespace characters
 
 
 
-        abstract public void Atack(Character atacked, double bonus);
+        virtual public void Atack(Character atacked, double bonus)
+        {
+            atacked.Recive_Damage(damage);
 
-        abstract public void Recive_Damage(int dmg);
+        }
+
+        virtual public void Recive_Damage(int dmg)
+        {
+            if(current_hp-dmg <= 0){
+                current_hp = 0;
+            }
+            else{
+                current_hp -= dmg;
+            }
+        }
 
         public bool is_dead(){
             return current_hp <= 0;
@@ -239,28 +251,7 @@ namespace characters
             return enemy_class;
         }
 
-        public override void Atack(Character atacked, double bonus)
-        {
-            atacked.Recive_Damage(damage);
 
-        }
-
-        public override void Recive_Damage(int dmg)
-        {
-            if(current_hp-dmg <= 0){
-                current_hp = 0;
-            }
-            else{
-                current_hp -= dmg;
-            }
-        }
-
-        protected override void character_scale(){
-            scale_hp();
-            scale_defence();
-            scale_luck();
-            scale_damage();
-        }
 
         protected override void scale_hp(){
             max_hp = 20 + (int)(Math.Ceiling(Math.Log(level*100))) + (level-1)*8 ;

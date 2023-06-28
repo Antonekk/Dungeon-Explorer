@@ -42,15 +42,9 @@ namespace rooms
             throw new Exception("Wrong character");
         }
 
-        public override void start(Player p)
-        {
-            Start_Fight(p);
-            ConsoleKeyInfo key = Console.ReadKey();
 
 
-        }
-
-        public void Start_Fight(Player p){
+        public override void start(Player p){
             // Player can either focus to boost doge chance or prepare to boost next atack (effects can stack)
             int doge_chance = 0;
             double damage_mult = 1.0;
@@ -76,7 +70,7 @@ namespace rooms
 
                     case ConsoleKey.D3:
                         int bc = rnd.Next(10,16);
-                        if (doge_chance + bc <= 100){
+                        if (doge_chance + bc <= 80){
                             doge_chance += bc;
                             break;
                         }
@@ -113,6 +107,7 @@ namespace rooms
 
 
             }
+            Console.ReadKey();
 
 
         }
