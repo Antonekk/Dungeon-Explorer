@@ -162,6 +162,12 @@ namespace characters
                 current_hp = 0;
             }
         }
+        public void reach_for_gold(double p){
+            current_hp -= Convert.ToInt32((double)(p/100 * max_hp));
+            if( current_hp < 0){
+                current_hp = 0;
+            }
+        }
 
         public int get_gold_coins(){
             return gold_coins;
@@ -362,6 +368,61 @@ namespace characters
         }
 
 
+
+    }
+
+    class Boss : Enemy{
+
+        public Boss (int lvl){
+            enemy_class = "Dungeon Boss";
+            level = lvl;
+            character_scale();
+            set_gold();
+            current_hp = max_hp;
+        }
+
+
+        public override void Atack(Character atacked, double bonus)
+        {
+            atacked.Recive_Damage(damage);
+            if(rnd.Next(3) == 0){
+                atacked.Recive_Damage(damage);
+                Console.Write("\n");
+                Console.WriteLine("Boss attacked twice");
+                Thread.Sleep(1000);
+            };
+
+        }
+
+        public override void Recive_Damage(int dmg)
+        {
+
+            int l;
+            if(luck>80){
+                l = 80;
+            }
+            else{
+                l = luck;
+            }
+            if(rnd.Next(101) < l){
+                term.ClearCurrentConsoleLine();
+                Console.WriteLine("Boss doged");
+                Thread.Sleep(1000);
+                return;
+            }
+            if(dmg >= defence){
+                dmg -= defence;
+            }
+            else{
+                dmg = 0;
+            }
+            if(current_hp-dmg <= 0){
+                current_hp = 0;
+            }
+            else{
+                current_hp -= dmg;
+            }
+        }
 
     }
 }

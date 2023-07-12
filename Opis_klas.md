@@ -43,6 +43,11 @@ Abstrakcyjna klasa pokoju po której dziedziczą : Fight_Room, Shop oraz Healing
 ### start (typ : (Player -> void)) (abstrakcyjna)
 Rozpoczyna akcje dostępne w pokoju
 
+## Funkcje chronione
+
+### is_dead_info (typ : (Player -> void))
+W przypadku śmierci gracza wypisuje jego wynik i kończy działanie programu
+
 
 # Fight_Room (dziedziczy po Room)
 W tym pokoju odbywa się walka gracza z losowym przeciwnikiem.
@@ -57,8 +62,7 @@ Rozpoczyna główną pętlę w której odbywa się walka gracza z potworem. Zost
 ### generate_enemy (typ  ( -> Enemy))
 Generuje i zwraca losowego przeciwnika
 
-### is_dead_info (typ : (Player -> void)) (override)
-W przypadku śmierci gracza wypisuje jego wynik i kończy działanie programu
+
 
 
 # Shop (dziedziczy po Room)
@@ -94,6 +98,22 @@ Funkcja wywoływana kiedy gracz zdecyduje się na leczenie. Jeśli gracz ma wyst
 
 ### scale_price (typ : (int-> int))
 Wylicza odpowiednią cenę za uzdrowienie
+
+# Snake_Room (dziedziczy po Room)
+Pokój w którym gracz poświęcając losową część zdrowia zyskuje określoną ilość złota
+
+## Funkcje publiczne
+
+### start (typ : (Player -> void)) (override)
+Wyświetla zdrowie do poświęcenia oraz ilość złota którą może zystać gracz.
+
+## Funkcje prywatne
+
+### sacrifice_state (typ : (Player -> void))
+Funkcja wywoływana kiedy gracz zdecyduje się na poświęcenie. Gracz poświęca część życia w zamian za złoto
+
+### scale_gold (typ : (int-> int))
+Wylicza odpowiednią nagrodę w zamian za poświęcenie zdrowia
 
 # Character (abstrakcyjna)
 Abstrakcyjna klasa Postaci po której dziedziczą : Player oraz Enemy

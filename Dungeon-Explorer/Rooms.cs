@@ -13,12 +13,21 @@ namespace rooms
         protected int room_level;
 
         public abstract void start(Player p);
+
+        protected void is_dead_info(Player p){
+            if(p.is_dead()){
+                Console.Clear();
+                term.Write_Center($"You died in room {room_level}");
+                System.Environment.Exit(0);
+            }
+        }
     }
 
 
     class Fight_Room : Room
     {
         Enemy enemy;
+        bool boss_fight = false;
 
         public Fight_Room(){
             room_level = 1;
@@ -27,6 +36,17 @@ namespace rooms
         public Fight_Room(int lvl){
             room_level = lvl;
             enemy = generate_enemy();
+        }
+
+        public Fight_Room(int lvl, bool is_boss){
+            room_level = lvl;
+            if(is_boss){
+                enemy = new Boss(room_level);
+                boss_fight = true;
+            }
+            else{
+                enemy = generate_enemy();
+            }
         }
 
         Enemy generate_enemy(){
@@ -107,18 +127,23 @@ namespace rooms
 
 
             }
-            Console.ReadKey();
+            post_fight();
 
 
         }
 
-        private void is_dead_info(Player p){
-            if(p.is_dead()){
+        private void post_fight(){
+            if(boss_fight){
                 Console.Clear();
-                term.Write_Center($"You died in room {room_level}");
+                term.Write_Center("You won");
                 System.Environment.Exit(0);
             }
+            else{
+                Console.ReadKey();
+            }
         }
+
+
 
 
     }
@@ -253,4 +278,52 @@ namespace rooms
             return (xlvl* (int)(Math.Ceiling(Math.Log(xlvl))));
         }
     }
+
+    class Snake_Room : Room
+    {
+        int gold;
+        int health_cost;
+
+        public Snake_Room(){
+            room_level = 1;
+            gold = Scale_gold(room_level);
+            health_cost = rnd.Next(2,7);
+        }
+
+        public Snake_Room(int lvl){
+            room_level = lvl;
+            gold = Scale_gold(room_level);
+            health_cost = rnd.Next(2,7);
+        }
+
+        public override void start(Player p)
+        {
+            Console.Clear();
+            term.WritePlayerData(p);
+            term.Write_Center("Snake Room\n");
+            Console.WriteLine($"[1] Sacrifice {health_cost}% of your max health to gain, {gold} gold");
+            Console.WriteLine("[Other] Leave:\n");
+            ConsoleKeyInfo key = Console.ReadKey();
+            if(key.Key == ConsoleKey.D1){
+                sacrifice_state(p);
+                Console.WriteLine("[Any] Go to the next room");
+                ConsoleKeyInfo key2 = Console.ReadKey();
+            }
+
+        }
+
+        void sacrifice_state(Player p){
+            term.ClearCurrentConsoleLine();
+            p.reach_for_gold(health_cost);
+            p.add_gold(gold);
+            is_dead_info(p);
+        }
+
+
+
+        int Scale_gold(int lvl){
+            return room_level * rnd.Next(7,14);
+        }
+    }
+
 }
